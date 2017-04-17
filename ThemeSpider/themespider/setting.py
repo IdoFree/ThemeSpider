@@ -1,0 +1,1 @@
+INITIALIZED_URL = []#here to set the start web site

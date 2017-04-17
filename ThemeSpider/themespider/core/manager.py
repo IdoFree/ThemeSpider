@@ -1,7 +1,12 @@
 import queue
-
+from themespider import setting
 class SeedManager:
 	__q = queue.Queue(1000)
+	
+	def __init__(self,init_url):
+		for url in range(init_url):
+			self.putSeed(url)
+	
 	
 	def getNextSeed(self):
 		if(!__q.empty()):
@@ -15,4 +20,4 @@ class SeedManager:
 		else:
 			print "the seed queue is full"
 
-seedManager = seedManager()
+seedManager = seedManager(INITIALIZED_URL)

@@ -1,6 +1,6 @@
 from themespider.http.request import request
 from themespider.core import dispatcher
-
+import time
 from . import SeedManager
 
 import queue 
@@ -19,10 +19,12 @@ class Spider:
 				response = request.get(seed)
 				links = response.get_all_links()
 				for link in links:
-					seedManager.put(link)			
+					if(self.filter(link)):#only the url we want will be put into the seed queue
+						seedManager.put(link)			
 				content = response.content
 				self.parse(content)
 				print content
+				time.sleep( 1 )#be a polite spider
 		
 		
 	
@@ -30,5 +32,14 @@ class Spider:
 	def parse(self,content):
 		print "default parse behaviour"
 		pass
+		
+	def filer(self,url):
+		return True
+		
+		
+if __name__ == "__main__":
+    spider = Spider()
+	spider.start()
+		
 		
 	
