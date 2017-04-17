@@ -1,4 +1,5 @@
 from threading import Thread
+from . import SeedManager
 class SeedDispatcher:
 	"""
 	this class is for monitoring the crawling seed , and dispatcher 
@@ -12,7 +13,7 @@ class SeedDispatcher:
 	def getNextUrls(count=10):
 		resultUrls = []
 		for i in range(10):
-			resultUrls[i] =  seedQueue.get()
+			resultUrls[i] =  seedManager.get()
 		return resultUrls
 	
 	

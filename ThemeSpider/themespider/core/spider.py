@@ -1,28 +1,34 @@
 from themespider.http.request import request
 from themespider.core import dispatcher
+
+from . import SeedManager
+
 import queue 
 class Spider:
-	def __init__(self,name,seed_list = None):
-		if seed_list not None:
-			self.seed_list = seed_list
-		else:
-			self.seed_list = queue.Queue()
+	def __init__(self,name):	
 		self.name = name
 		pass
 		
 	def start():
 		while True:
-			if len(seed_list) == 0 :
-				seed_list.extend(dispatcher.seedDispatcher.getNextUrls(10))
-			else:				
-				response = request.get(seed_list.get())
+			''' when start crawling , the spider will get the initialized url from seedDispatcher
+				then parsing the response , and will put the url in the response body to the seedDispatcher 
+			'''
+			seed_list = dispatcher.seedDispatcher.getNextUrls(10)
+			for seed : range(seed_list):
+				response = request.get(seed)
 				links = response.get_all_links()
-				
 				for link in links:
-					seedQueue.put(link)						
-				#TODO persist the response data  
+					seedManager.put(link)			
 				content = response.content
+				self.parse(content)
+				print content
 		
 		
+	
+	
+	def parse(self,content):
+		print "default parse behaviour"
+		pass
 		
 	
